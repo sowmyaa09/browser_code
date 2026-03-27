@@ -1,0 +1,205 @@
+<!-- =========================
+PRODUCTION-READY UNIVERSITY WEBSITE
+Single-file version (can split later)
+========================= -->
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Future University</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+<!-- NAVBAR -->
+<header class="bg-white shadow sticky top-0 z-50">
+  <nav class="container mx-auto flex justify-between items-center p-4">
+    <h1 class="text-xl font-bold">FutureUni</h1>
+    <ul class="flex gap-6">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#courses">Courses</a></li>
+      <li><a href="#admissions">Admissions</a></li>
+      <li><a href="#faculty">Faculty</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section id="home" class="h-screen flex flex-col justify-center items-center bg-gradient-to-r from-blue-600 to-indigo-700 text-white text-center">
+  <h2 class="text-5xl font-bold">Shape Your Future</h2>
+  <p class="mt-4 text-lg">World-class education with real-world impact</p>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="p-10 container mx-auto">
+  <h2 class="text-3xl font-bold mb-4">About Us</h2>
+  <p>Future University is committed to excellence in education, research, and innovation.</p>
+</section>
+
+<!-- COURSES + FILTER -->
+<section id="courses" class="p-10 bg-gray-100">
+  <h2 class="text-3xl font-bold text-center mb-6">Courses</h2>
+  <input id="search" type="text" placeholder="Search courses..." class="p-2 border mb-4 w-full">
+  <div id="courseList" class="grid md:grid-cols-3 gap-6"></div>
+</section>
+
+<!-- ADMISSIONS -->
+<section id="admissions" class="p-10 container mx-auto">
+  <h2 class="text-3xl font-bold mb-4">Admissions</h2>
+  <ul class="list-disc ml-6">
+    <li>Fill application form</li>
+    <li>Submit documents</li>
+    <li>Entrance test (if required)</li>
+  </ul>
+</section>
+
+<!-- FACULTY -->
+<section id="faculty" class="p-10 bg-gray-100">
+  <h2 class="text-3xl font-bold text-center mb-6">Faculty</h2>
+  <div class="grid md:grid-cols-3 gap-6">
+    <div class="bg-white p-4 shadow text-center">
+      <h3>Dr. Sharma</h3>
+      <p>Computer Science</p>
+    </div>
+    <div class="bg-white p-4 shadow text-center">
+      <h3>Prof. Rao</h3>
+      <p>Mechanical</p>
+    </div>
+    <div class="bg-white p-4 shadow text-center">
+      <h3>Dr. Mehta</h3>
+      <p>Business</p>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS + COUNTDOWN -->
+<section id="events" class="p-10 container mx-auto">
+  <h2 class="text-3xl font-bold mb-6">Events</h2>
+  <p id="countdown" class="mb-4 font-bold"></p>
+  <div id="eventsList"></div>
+</section>
+
+<!-- FAQ -->
+<section class="p-10 bg-gray-100">
+  <h2 class="text-3xl font-bold mb-6">FAQs</h2>
+  <div>
+    <button onclick="toggleFAQ(0)" class="w-full text-left p-3 bg-white mb-2">What is admission process?</button>
+    <p class="hidden p-3 bg-gray-200">Apply online and submit documents.</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="p-10 container mx-auto">
+  <h2 class="text-3xl font-bold mb-4">Contact</h2>
+  <form class="flex flex-col gap-4 max-w-md">
+    <input type="text" placeholder="Name" class="p-2 border">
+    <input type="email" placeholder="Email" class="p-2 border">
+    <textarea placeholder="Message" class="p-2 border"></textarea>
+    <button class="bg-blue-600 text-white p-2">Send</button>
+  </form>
+</section>
+
+<!-- CHATBOT MOCK -->
+<div class="fixed bottom-5 right-5 bg-blue-600 text-white p-3 rounded-full cursor-pointer" onclick="toggleChat()">Chat</div>
+<div id="chatbox" class="hidden fixed bottom-20 right-5 bg-white shadow p-4 w-64">
+  <p>Hello! How can I help?</p>
+</div>
+
+<!-- FOOTER -->
+<footer class="bg-black text-white text-center p-4 mt-10">
+  <p>© 2026 Future University</p>
+</footer>
+
+<script>
+// COURSES DATA
+const courses = ["Computer Science","Mechanical","Business","AI","Data Science"];
+const courseList = document.getElementById("courseList");
+const search = document.getElementById("search");
+
+function displayCourses(filter=""){
+  courseList.innerHTML="";
+  courses.filter(c=>c.toLowerCase().includes(filter.toLowerCase()))
+  .forEach(c=>{
+    const div=document.createElement("div");
+    div.className="bg-white p-4 shadow";
+    div.innerText=c;
+    courseList.appendChild(div);
+  });
+}
+
+search.addEventListener("input",e=>displayCourses(e.target.value));
+displayCourses();
+
+// EVENTS
+const events=["Tech Fest","Hackathon","Cultural Fest"];
+const eventsList=document.getElementById("eventsList");
+events.forEach(e=>{
+  const div=document.createElement("div");
+  div.className="bg-white p-3 shadow mb-2";
+  div.innerText=e;
+  eventsList.appendChild(div);
+});
+
+// COUNTDOWN
+const countdown=document.getElementById("countdown");
+setInterval(()=>{
+  const eventDate=new Date("2026-04-01");
+  const now=new Date();
+  const diff=eventDate-now;
+  countdown.innerText="Event in "+Math.floor(diff/1000/60/60/24)+" days";
+},1000);
+
+// FAQ
+function toggleFAQ(i){
+  document.querySelectorAll("section p.hidden, section p.bg-gray-200")[i].classList.toggle("hidden");
+}
+
+// CHAT
+function toggleChat(){
+  document.getElementById("chatbox").classList.toggle("hidden");
+}
+</script>
+
+</body>
+</html>
+
+
+<!-- =========================
+README.md
+========================= -->
+
+# Future University Website
+
+## Overview
+A fully responsive university website with modern UI and interactive features.
+
+## Features
+- Responsive design
+- Course search/filter
+- Event countdown
+- FAQ accordion
+- Chatbot UI (mock)
+
+## Tech Stack
+- HTML
+- Tailwind CSS
+- JavaScript
+
+## Setup
+Open index.html in browser
+
+## Deployment
+1. Push to GitHub
+2. Import repo in Vercel
+3. Deploy
+
+## Innovations
+- Chatbot UI
+- Countdown timer
+- Dynamic filtering
